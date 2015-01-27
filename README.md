@@ -36,9 +36,14 @@ If you are using jQuery, use:
 
 If not:
 
-    cordova.getAppVersion(function (version) {
+    cordova.getAppVersion.version(function (version) {
         alert(version);
     });
+
+    cordova.getAppVersion.buildNumber(function (build) {
+        alert(build);
+    });
+
 
 ## Credits
 
