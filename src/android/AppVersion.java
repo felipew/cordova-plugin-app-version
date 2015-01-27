@@ -10,20 +10,24 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.PackageManager;
 
 public class AppVersion extends CordovaPlugin {
-	@Override
+  @Override
         public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-		try {	
-			if (action.equals("getVersionNumber")) {
-				PackageManager packageManager = this.cordova.getActivity().getPackageManager();
-				callbackContext.success(packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), 0).versionName);
-			return true;
-			}
-			return false;
-		} catch (NameNotFoundException e) {
-			callbackContext.success("N/A");
-			return true;
-		}
-	}
+    try {
+      if (action.equals("getVersionNumber")) {
+        PackageManager packageManager = this.cordova.getActivity().getPackageManager();
+        callbackContext.success(packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), 0).versionName);
+        return true;
+      } else if( action.equals("getAppBuildNumber")) {
+        PackageManager packageManager = this.cordova.getActivity().getPackageManager();
+        callbackContext.success(packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), 0).versionCode);
+        return true;
+      }
+      return false;
+    } catch (NameNotFoundException e) {
+      callbackContext.success("N/A");
+      return true;
+    }
+  }
 
 }

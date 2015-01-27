@@ -8,7 +8,7 @@
 
     NSString* callbackId = command.callbackId;
     NSString* version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    if (version == nil) {
+    if (version == nil) { // using cordova shouldn't fall here
       NSLog(@"CFBundleShortVersionString was nil, attempting CFBundleVersion");
       version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
       if (version == nil) {
@@ -18,12 +18,26 @@
     }
 
     CDVPluginResult* pluginResult = nil;
-    NSString* javaScript = nil;
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:version];
-    javaScript = [pluginResult toSuccessCallbackString:callbackId];
+    
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+}
 
-    [self writeJavascript:javaScript];
+- (void) getBuildNumber: (CDVInvokedUrlCommand*)command
+{
+    NSString* callbackId = command.callbackId;
+    NSString* buildVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    if( buildVersion == nil ) {
+        // well, we dont have one, what a shame :(
+        NSLog(@"Didn't find build number.. :(");
+    }
+    
+    CDVPluginResult* pluginResult = nil;
+    
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:buildVersion];
+    
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
 }
 
 @end
