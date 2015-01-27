@@ -18,7 +18,7 @@ public class AppVersion extends CordovaPlugin {
         PackageManager packageManager = this.cordova.getActivity().getPackageManager();
         callbackContext.success(packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), 0).versionName);
         return true;
-      } else if( action.equals("getAppBuildNumber")) {
+      } else if( action.equals("getBuildNumber")) {
         PackageManager packageManager = this.cordova.getActivity().getPackageManager();
         callbackContext.success(packageManager.getPackageInfo(this.cordova.getActivity().getPackageName(), 0).versionCode);
         return true;

@@ -1,5 +1,9 @@
 // Returns a jQuery or AngularJS deferred object, or pass a success and fail callbacks if you don't want to use jQuery or AngularJS
-var getAppVersion = function (success, fail) {
+
+function getAppVersion(){};
+
+
+getAppVersion.prototype.version = function (success, fail) {
   var toReturn, deferred;
   if ((typeof success) === 'undefined') {
     if(window.jQuery){
@@ -21,7 +25,7 @@ var getAppVersion = function (success, fail) {
   return toReturn;
 };
 
-var getAppBuuildNumber = function(success, fail) {
+getAppVersion.prototype.buildNumber = function(success, fail) {
   var toReturn,deferred;
   if ((typeof success) === 'undefined') {
     if(window.jQuery){
@@ -39,9 +43,8 @@ var getAppBuuildNumber = function(success, fail) {
     fail = deferred.reject;
   }
   // 5th param is NOT optional. must be at least empty array
-  cordova.exec(success, fail, "AppVersion", "getBuuildNumber", []);
+  cordova.exec(success, fail, "AppVersion", "getBuildNumber", []);
   return toReturn;
-}
+};
 
-module.exports = getAppVersion;
-modele.exports = getAppBuuildNumber;
+module.exports = new getAppVersion();
